@@ -1,6 +1,6 @@
 import { NextApiResponse } from 'next';
 import connectDB from 'src/app/_lib/connectDB';
-import EventsSchema from '@schemas/Events.schema';
+import EventsSchema from '@schemas/EventsSchema';
 import { Event } from 'types/Stryktipset';
 
 export default async function handler(_req: any, res: NextApiResponse) {

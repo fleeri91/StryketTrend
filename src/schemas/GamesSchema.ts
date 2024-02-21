@@ -31,5 +31,5 @@ const gamesSchema = new Schema({
   ],
 });
 
-const GamesModel = models.games || model('games', gamesSchema);
-export default GamesModel;
+const GamesSchema = models.games || model('games', gamesSchema);
+export default GamesSchema;

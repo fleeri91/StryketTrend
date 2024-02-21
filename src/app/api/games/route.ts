@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import connectDB from 'src/app/_lib/connectDB';
-import GamesSchema from '@schemas/games.schema';
+import GamesSchema from '@schemas/GamesSchema';
 
 export async function GET() {
   try {
