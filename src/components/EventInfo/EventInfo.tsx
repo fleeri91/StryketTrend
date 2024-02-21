@@ -14,7 +14,17 @@ const EventInfo = ({ gameType, startTime }: EventInfoProps) => {
     dayjs(startTime).diff(dayjs(), 'milliseconds') || 0
   );
 
-  const CountdownRenderer = ({ days, hours, minutes, seconds }) => {
+  const CountdownRenderer = ({
+    days,
+    hours,
+    minutes,
+    seconds,
+  }: {
+    days: number;
+    hours: number;
+    minutes: number;
+    seconds: number;
+  }) => {
     return (
       <div className='text-md font-medium'>
         {days} dagar {hours} timmar {minutes} minuter {seconds} sekunder
