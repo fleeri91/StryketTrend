@@ -10,7 +10,7 @@ import Modal from '@components/Modal';
 import { LineChart } from '@tremor/react';
 
 import { useGetStryktipsetQuery } from '@store/api/stryktipset';
-import { useGetEventsQuery, useGetGamesQuery } from '@store/api/events';
+import { useGetGamesQuery } from '@store/api/events';
 
 import { setGames } from '@store/slices/base.slice';
 import EventInfo from '@components/EventInfo';
