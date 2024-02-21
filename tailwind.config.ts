@@ -3,13 +3,14 @@ import colors from 'tailwindcss/colors';
 
 const config: Config = {
   content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
 
     // Path to Tremor module
     './node_modules/@tremor/**/*.{js,ts,jsx,tsx}',
   ],
+  // darkMode: 'class',
   theme: {
     transparent: 'transparent',
     current: 'currentColor',
@@ -100,6 +101,9 @@ const config: Config = {
         'tremor-default': ['0.875rem', { lineHeight: '1.25rem' }],
         'tremor-title': ['1.125rem', { lineHeight: '1.75rem' }],
         'tremor-metric': ['1.875rem', { lineHeight: '2.25rem' }],
+      },
+      gridTemplateColumns: {
+        'event-item': 'auto 1fr auto',
       },
     },
   },

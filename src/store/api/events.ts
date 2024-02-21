@@ -1,21 +1,21 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { EventsRoot } from '../../types/Events';
-import { GamesRoot } from '../../types/Games';
+import { EventsRoot } from 'types/Events';
+import { GamesRoot } from 'types/Games';
 
 // Define a service using a base URL and expected endpoints
 export const eventsApi = createApi({
   reducerPath: 'eventsApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:3000',
+    baseUrl: 'http://localhost:3000/api/',
   }),
   tagTypes: ['events'],
   endpoints: (builder) => ({
     getEvents: builder.query<EventsRoot[], void>({
-      query: () => `/events`,
+      query: () => `events`,
       providesTags: ['events'],
     }),
     getGames: builder.query<GamesRoot[], void>({
-      query: () => `/games`,
+      query: () => `games`,
       providesTags: ['events'],
     }),
   }),

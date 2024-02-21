@@ -24,6 +24,8 @@ const BaseSlice = createSlice({
       state.events = action.payload;
     },
     setGames: (state, action: PayloadAction<GamesRoot[]>) => {
+      state.games = action.payload;
+      /*
       state.games = action.payload.map((game) => ({
         ...game,
         percentage: game.percentage.map((percent) => ({
@@ -35,6 +37,7 @@ const BaseSlice = createSlice({
           timestamp: dayjs(odd.timestamp).format('HH:mm'),
         })),
       }));
+      */
     },
   },
 });

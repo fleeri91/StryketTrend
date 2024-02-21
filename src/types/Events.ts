@@ -5,6 +5,13 @@ export interface EventsRoot {
   __v: number;
 }
 
+export interface Events {
+  _id: string;
+  timestamp: string;
+  events: Event[];
+  __v: number;
+}
+
 export interface Event {
   teams: Teams;
   percentage: Percentage;
