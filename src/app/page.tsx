@@ -58,33 +58,35 @@ const App = () => {
           startTime={stryktipsetData.draws[0].closeTime}
         />
       )}
-      <EventList lastUpdate={lastUpdated}>
-        {stryktipsetData &&
-          stryktipsetData.draws[0].events.map((event, index) => (
-            <EventItem
-              key={index}
-              startTime={dayjs(event.sportEventStart).format('HH:mm')}
-              game={games[index]}
-              teams={{
-                home: event.participants[0].name,
-                away: event.participants[1].name,
-              }}
-              percentage={{
-                home: event.distribution.home,
-                draw: event.distribution.draw,
-                away: event.distribution.away,
-              }}
-              odds={{
-                home: event.odds.home,
-                draw: event.odds.draw,
-                away: event.odds.away,
-              }}
-              onClick={() =>
-                handleRowClick(games?.[index]).then(() => setIsOpen(true))
-              }
-            />
-          ))}
-      </EventList>
+      {gamesData && (
+        <EventList lastUpdate={lastUpdated}>
+          {stryktipsetData &&
+            stryktipsetData.draws[0].events.map((event, index) => (
+              <EventItem
+                key={index}
+                startTime={dayjs(event.sportEventStart).format('HH:mm')}
+                game={gamesData[index]}
+                teams={{
+                  home: event.participants[0].name,
+                  away: event.participants[1].name,
+                }}
+                percentage={{
+                  home: event.distribution.home,
+                  draw: event.distribution.draw,
+                  away: event.distribution.away,
+                }}
+                odds={{
+                  home: event.odds.home,
+                  draw: event.odds.draw,
+                  away: event.odds.away,
+                }}
+                onClick={() =>
+                  handleRowClick(gamesData?.[index]).then(() => setIsOpen(true))
+                }
+              />
+            ))}
+        </EventList>
+      )}
       {selectedGame && (
         <Modal
           title={`${selectedGame.teams.home} - ${selectedGame.teams.away}`}
