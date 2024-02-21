@@ -7,11 +7,9 @@ export const stryktipsetApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: '/api/',
   }),
-  tagTypes: ['Stryktipset'],
   endpoints: (builder) => ({
     getStryktipset: builder.query<StryktipsetRoot, void>({
       query: () => `stryktipset`,
-      providesTags: ['Stryktipset'],
     }),
   }),
 });

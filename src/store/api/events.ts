@@ -7,11 +7,9 @@ export const eventsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: '/api/',
   }),
-  tagTypes: ['events'],
   endpoints: (builder) => ({
     getGames: builder.query<GamesRoot[], void>({
       query: () => `games`,
-      providesTags: ['events'],
     }),
   }),
 });
