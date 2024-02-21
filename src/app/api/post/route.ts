@@ -5,6 +5,7 @@ import connectDB from 'src/app/_lib/connectDB';
 import GamesSchema from '@schemas/GamesSchema';
 
 import { GamesRoot } from 'types/Games';
+import { Event } from 'types/Stryktipset';
 
 export async function GET() {
   try {
@@ -14,37 +15,46 @@ export async function GET() {
     const data = response.data;
 
     if (data) {
-      const events = data.draws[0].events.map((eventData, index) => {
-        const { participants, distribution, odds, eventNumber } = eventData;
+      const events = data.draws[0].events.map(
+        (eventData: Event, index: number) => {
+          const { participants, distribution, odds, eventNumber } = eventData;
 
-        let oddsHome = '';
-        let oddsDraw = '';
-        let oddsAway = '';
+          let oddsHome = '';
+          let oddsDraw = '';
+          let oddsAway = '';
 
-        if (typeof odds.home === 'string') {
-          oddsHome = odds.home.replace(',', '.');
-          oddsDraw = odds.draw.replace(',', '.');
-          oddsAway = odds.away.replace(',', '.');
+          if (typeof odds.home === 'string') {
+            oddsHome = odds.home.replace(',', '.');
+            oddsDraw = odds.draw.replace(',', '.');
+            oddsAway = odds.away.replace(',', '.');
+          }
+
+          const homeParticipant = participants.find((p) => p.type === 'home');
+          const awayParticipant = participants.find((p) => p.type === 'away');
+
+          if (homeParticipant && awayParticipant) {
+            return {
+              eventNumber: eventNumber,
+              teams: {
+                home: homeParticipant.name,
+                away: awayParticipant.name,
+              },
+              percentage: {
+                home: distribution.home,
+                draw: distribution.draw,
+                away: distribution.away,
+              },
+              odds: {
+                home: oddsHome || odds.home,
+                draw: oddsDraw || odds.draw,
+                away: oddsAway || odds.away,
+              },
+            };
+          } else {
+            throw new Error('Home or away participant not found');
+          }
         }
-
-        return {
-          eventNumber: eventNumber,
-          teams: {
-            home: participants.find((p) => p.type === 'home').name,
-            away: participants.find((p) => p.type === 'away').name,
-          },
-          percentage: {
-            home: distribution.home,
-            draw: distribution.draw,
-            away: distribution.away,
-          },
-          odds: {
-            home: oddsHome || odds.home,
-            draw: oddsDraw || odds.draw,
-            away: oddsAway || odds.away,
-          },
-        };
-      });
+      );
 
       for (const event of events) {
         let oddsHome = '';
