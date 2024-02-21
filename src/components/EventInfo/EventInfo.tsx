@@ -27,7 +27,11 @@ const EventInfo = ({ gameType, startTime }: EventInfoProps) => {
   }) => {
     return (
       <div className='text-md font-medium'>
-        {days} dagar {hours} timmar {minutes} minuter {seconds} sekunder
+        {`${days} ${days === 1 ? 'dag' : 'dagar'} 
+          ${hours} ${hours === 1 ? 'timme' : 'timmar'} 
+          ${minutes} ${minutes === 1 ? 'minut' : 'minuter'} 
+          ${seconds} ${seconds === 1 ? 'sekund' : 'sekunder'}
+        `}
       </div>
     );
   };
