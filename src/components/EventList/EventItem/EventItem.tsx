@@ -1,6 +1,5 @@
 import { BadgeDelta } from '@tremor/react';
 
-import { Event } from '../../../types/Events';
 import { GamesRoot } from 'types/Games';
 
 interface EventItemProps {
