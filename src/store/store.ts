@@ -1,13 +1,13 @@
 /** Library */
-import { configureStore } from "@reduxjs/toolkit";
-import { setupListeners } from "@reduxjs/toolkit/query/react";
+import { configureStore } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query/react';
 
 /** API */
-import { stryktipsetApi } from "./api/stryktipset";
-import { eventsApi } from "./api/events";
+import { stryktipsetApi } from './api/stryktipset';
+import { eventsApi } from './api/events';
 
 /** Slice */
-import { baseReducer } from "./slices/base.slice";
+import { baseReducer } from './slices/base.slice';
 
 // Create the Redux store
 export const store = configureStore({
