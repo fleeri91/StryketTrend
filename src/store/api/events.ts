@@ -6,7 +6,7 @@ import { GamesRoot } from 'types/Games';
 export const eventsApi = createApi({
   reducerPath: 'eventsApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:3000/api/',
+    baseUrl: '/api/',
   }),
   tagTypes: ['events'],
   endpoints: (builder) => ({
