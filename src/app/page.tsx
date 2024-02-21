@@ -26,11 +26,11 @@ const App = () => {
 
   const games = useSelector((state: RootState) => state.base.games);
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_KEY;
-
-  const { data: stryktipsetData } = useGetStryktipsetQuery(apiUrl || '', {
-    pollingInterval: 1000 * 60 * 5,
-  });
+  const { data: stryktipsetData } = useGetStryktipsetQuery(
+    void {
+      pollingInterval: 1000 * 60 * 5,
+    }
+  );
 
   const { data: gamesData } = useGetGamesQuery(
     void { pollingInterval: 1000 * 60 * 5 }
