@@ -4,10 +4,12 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import dayjs from 'dayjs';
 
+import { RiHistoryLine } from '@remixicon/react';
+
 import { EventItem, EventList } from '@components/EventList';
 import Container from '@components/Container';
 import Modal from '@components/Modal';
-import { LineChart } from '@tremor/react';
+import { Flex, Icon, LineChart } from '@tremor/react';
 
 import { useGetStryktipsetQuery } from '@store/api/stryktipset';
 import { useGetGamesQuery } from '@store/api/events';
@@ -16,11 +18,13 @@ import { setGames } from '@store/slices/base.slice';
 import EventInfo from '@components/EventInfo';
 import { GamesRoot } from 'types/Games';
 import { RootState } from '@store/store';
+import { HistoryList, HistoryItem } from '@components/HistoryList';
 
 const App = () => {
   const dispatch = useDispatch();
 
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isGraphOpen, setIsGraphOpen] = useState<boolean>(false);
+  const [isHistoryOpen, setIsHistoryOpen] = useState<boolean>(false);
   const [lastUpdated, setLastUpdated] = useState<string>('');
   const [selectedGame, setSelectedGame] = useState<GamesRoot | null>(null);
 
@@ -58,8 +62,19 @@ const App = () => {
           startTime={stryktipsetData.draws[0].closeTime}
         />
       )}
+      <Flex className='mb-2'>
+        <span>{`Senast uppdaterd ${lastUpdated}`}</span>
+        <Icon
+          icon={RiHistoryLine}
+          variant='solid'
+          color='slate'
+          tooltip='Historik'
+          className='cursor-pointer'
+          onClick={() => setIsHistoryOpen(true)}
+        />
+      </Flex>
       {gamesData && (
-        <EventList lastUpdate={lastUpdated}>
+        <EventList>
           {stryktipsetData &&
             stryktipsetData.draws[0].events.map((event, index) => (
               <EventItem
@@ -81,7 +96,9 @@ const App = () => {
                   away: event.odds.away,
                 }}
                 onClick={() =>
-                  handleRowClick(gamesData?.[index]).then(() => setIsOpen(true))
+                  handleRowClick(gamesData?.[index]).then(() =>
+                    setIsGraphOpen(true)
+                  )
                 }
               />
             ))}
@@ -90,8 +107,8 @@ const App = () => {
       {selectedGame && (
         <Modal
           title={`${selectedGame.teams.home} - ${selectedGame.teams.away}`}
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
+          isOpen={isGraphOpen}
+          onClose={() => setIsGraphOpen(false)}
         >
           <span className='font-bold'>Spelprocent</span>
           <LineChart
@@ -113,6 +130,18 @@ const App = () => {
           />
         </Modal>
       )}
+      <Modal
+        title='Data historik'
+        isOpen={isHistoryOpen}
+        width='sm'
+        onClose={() => setIsHistoryOpen(false)}
+      >
+        <HistoryList>
+          <HistoryItem />
+          <HistoryItem />
+          <HistoryItem />
+        </HistoryList>
+      </Modal>
     </Container>
   );
 };
