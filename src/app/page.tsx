@@ -12,13 +12,14 @@ import Modal from '@components/Modal';
 import { Flex, Icon, LineChart } from '@tremor/react';
 
 import { useGetStryktipsetQuery } from '@store/api/stryktipset';
-import { useGetGamesQuery } from '@store/api/events';
+import { useGetEventsQuery, useGetGamesQuery } from '@store/api/events';
 
 import { setGames } from '@store/slices/base.slice';
 import EventInfo from '@components/EventInfo';
 import { GamesRoot } from 'types/Games';
 import { RootState } from '@store/store';
 import { HistoryList, HistoryItem } from '@components/HistoryList';
+import { EventsRoot } from 'types/Events';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -26,11 +27,20 @@ const App = () => {
   const [isGraphOpen, setIsGraphOpen] = useState<boolean>(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState<boolean>(false);
   const [lastUpdated, setLastUpdated] = useState<string>('');
+
+  const [selectedEvent, setSelectedEvent] = useState<EventsRoot | null>(null);
   const [selectedGame, setSelectedGame] = useState<GamesRoot | null>(null);
 
-  const games = useSelector((state: RootState) => state.base.games);
+  // const games = useSelector((state: RootState) => state.base.games);
 
-  const { data: stryktipsetData } = useGetStryktipsetQuery(
+  const { data: stryktipsetData, isLoading: stryktipsetLoading } =
+    useGetStryktipsetQuery(
+      void {
+        pollingInterval: 1000 * 60 * 5,
+      }
+    );
+
+  const { data: eventsData, isLoading: eventsLoading } = useGetEventsQuery(
     void {
       pollingInterval: 1000 * 60 * 5,
     }
@@ -139,9 +149,14 @@ const App = () => {
         onClose={() => setIsHistoryOpen(false)}
       >
         <HistoryList>
-          <HistoryItem />
-          <HistoryItem />
-          <HistoryItem />
+          {eventsData &&
+            eventsData.map((event: EventsRoot, index: number) => (
+              <HistoryItem
+                key={index}
+                time={event.timestamp}
+                onClick={() => setSelectedEvent(event)}
+              />
+            ))}
         </HistoryList>
       </Modal>
     </Container>
