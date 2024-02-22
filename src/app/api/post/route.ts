@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import axios, { HttpStatusCode } from 'axios';
 import connectDB from 'src/app/_lib/connectDB';
 
+import EventsSchema from '@schemas/EventsSchema';
 import GamesSchema from '@schemas/GamesSchema';
 
 import { GamesRoot } from 'types/Games';
@@ -9,6 +10,7 @@ import { Event } from 'types/Stryktipset';
 
 export async function GET() {
   try {
+    await connectDB();
     const response = await axios.get(
       `https://api.www.svenskaspel.se/external/1/draw/stryktipset/draws?accesskey=${process.env.NEXT_PUBLIC_API_KEY}`
     );
@@ -55,6 +57,15 @@ export async function GET() {
           }
         }
       );
+
+      const timestamp = new Date();
+
+      // Create a new EventData instance
+      const eventData = new EventsSchema({
+        timestamp: timestamp,
+        events: events,
+      });
+      await eventData.save();
 
       for (const event of events) {
         let oddsHome = '';
