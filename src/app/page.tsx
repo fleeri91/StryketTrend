@@ -57,22 +57,24 @@ const App = () => {
   return (
     <Container>
       {stryktipsetData && (
-        <EventInfo
-          gameType={stryktipsetData.draws[0].productName}
-          startTime={stryktipsetData.draws[0].closeTime}
-        />
+        <>
+          <EventInfo
+            gameType={stryktipsetData.draws[0].productName}
+            startTime={stryktipsetData.draws[0].closeTime}
+          />
+          <Flex className='mb-2'>
+            <span>{`Senast uppdaterd ${lastUpdated}`}</span>
+            <Icon
+              icon={RiHistoryLine}
+              variant='solid'
+              color='slate'
+              tooltip='Historik'
+              className='cursor-pointer'
+              onClick={() => setIsHistoryOpen(true)}
+            />
+          </Flex>
+        </>
       )}
-      <Flex className='mb-2'>
-        <span>{`Senast uppdaterd ${lastUpdated}`}</span>
-        <Icon
-          icon={RiHistoryLine}
-          variant='solid'
-          color='slate'
-          tooltip='Historik'
-          className='cursor-pointer'
-          onClick={() => setIsHistoryOpen(true)}
-        />
-      </Flex>
       {gamesData && (
         <EventList>
           {stryktipsetData &&
