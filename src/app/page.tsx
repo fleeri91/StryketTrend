@@ -58,6 +58,7 @@ const App = () => {
     if (stryktipsetData) {
       setLastUpdated(dayjs().format('HH:mm'));
     }
+    console.log(stryktipsetData);
   }, [stryktipsetData]);
 
   useEffect(() => {
