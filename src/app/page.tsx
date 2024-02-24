@@ -38,19 +38,23 @@ const App = () => {
 
   // const games = useSelector((state: RootState) => state.base.games);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`/api/stryktipset`);
-        console.log('axios fetch', response.data);
-        setStryktipsetData(response.data); // Save fetched data to state
-        setLastUpdated(dayjs().format('HH:mm')); // Update lastUpdated time
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        // Handle error
+  const fetchData = async () => {
+    try {
+      const response = await fetch('/api/stryktipset', { cache: 'no-store' });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-    };
+      const data = await response.json();
+      console.log('fetch data', data);
+      setStryktipsetData(data); // Save fetched data to state
+      setLastUpdated(dayjs().format('HH:mm')); // Update lastUpdated time
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      // Handle error
+    }
+  };
 
+  useEffect(() => {
     fetchData(); // Call fetchData function
 
     // Cleanup function if needed
