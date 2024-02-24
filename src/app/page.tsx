@@ -34,11 +34,7 @@ const App = () => {
   // const games = useSelector((state: RootState) => state.base.games);
 
   const { data: stryktipsetData, isLoading: stryktipsetLoading } =
-    useGetStryktipsetQuery(
-      void {
-        pollingInterval: 1000 * 60 * 5,
-      }
-    );
+    useGetStryktipsetQuery();
 
   const { data: eventsData, isLoading: eventsLoading } = useGetEventsQuery(
     void {
