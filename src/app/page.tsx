@@ -20,6 +20,8 @@ import { GamesRoot } from 'types/Games';
 import { RootState } from '@store/store';
 import { HistoryList, HistoryItem } from '@components/HistoryList';
 import { EventsRoot } from 'types/Events';
+import axios from 'axios';
+import { StryktipsetRoot } from 'types/Stryktipset';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -31,16 +33,30 @@ const App = () => {
   const [selectedEvent, setSelectedEvent] = useState<EventsRoot | null>(null);
   const [selectedGame, setSelectedGame] = useState<GamesRoot | null>(null);
 
+  const [stryktipsetData, setStryktipsetData] =
+    useState<StryktipsetRoot | null>(null);
+
   // const games = useSelector((state: RootState) => state.base.games);
 
-  const { data: stryktipsetData, isLoading: stryktipsetLoading } =
-    useGetStryktipsetQuery(new Date());
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`/api/stryktipset`);
+        setStryktipsetData(response.data); // Save fetched data to state
+        setLastUpdated(dayjs().format('HH:mm')); // Update lastUpdated time
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        // Handle error
+      }
+    };
 
-  const { data: eventsData, isLoading: eventsLoading } = useGetEventsQuery(
-    void {
-      pollingInterval: 1000 * 60 * 5,
-    }
-  );
+    fetchData(); // Call fetchData function
+
+    // Cleanup function if needed
+    return () => {
+      // Cleanup code if needed
+    };
+  }, []);
 
   const { data: gamesData } = useGetGamesQuery(
     void { pollingInterval: 1000 * 60 * 5 }
@@ -146,14 +162,15 @@ const App = () => {
         onClose={() => setIsHistoryOpen(false)}
       >
         <HistoryList>
-          {eventsData &&
+          {/*eventsData &&
             eventsData.map((event: EventsRoot, index: number) => (
               <HistoryItem
                 key={index}
                 time={event.timestamp}
                 onClick={() => setSelectedEvent(event)}
               />
-            ))}
+            ))*/}
+          <></>
         </HistoryList>
       </Modal>
     </Container>
