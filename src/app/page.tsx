@@ -42,6 +42,7 @@ const App = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`/api/stryktipset`);
+        console.log(response.data);
         setStryktipsetData(response.data); // Save fetched data to state
         setLastUpdated(dayjs().format('HH:mm')); // Update lastUpdated time
       } catch (error) {
