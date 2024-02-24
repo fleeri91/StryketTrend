@@ -34,7 +34,7 @@ const App = () => {
   // const games = useSelector((state: RootState) => state.base.games);
 
   const { data: stryktipsetData, isLoading: stryktipsetLoading } =
-    useGetStryktipsetQuery();
+    useGetStryktipsetQuery(new Date());
 
   const { data: eventsData, isLoading: eventsLoading } = useGetEventsQuery(
     void {
