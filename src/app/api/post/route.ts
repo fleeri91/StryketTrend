@@ -65,7 +65,7 @@ export async function GET() {
         timestamp: timestamp,
         events: events,
       });
-      await eventData.save();
+      //await eventData.save();
 
       for (const event of events) {
         let oddsHome = '';
@@ -133,7 +133,7 @@ export async function GET() {
           });
         }
         // Save the document to the database
-        await existingData.save();
+        //await existingData.save();
       }
 
       console.log('Data saved successfully!');
