@@ -8,8 +8,8 @@ export const stryktipsetApi = createApi({
     baseUrl: '/api/',
   }),
   endpoints: (builder) => ({
-    getStryktipset: builder.query<StryktipsetRoot, Date>({
-      query: (timestamp) => `stryktipset?timestamp=${timestamp}`,
+    getStryktipset: builder.query<StryktipsetRoot, void>({
+      query: () => `stryktipset`,
     }),
   }),
 });

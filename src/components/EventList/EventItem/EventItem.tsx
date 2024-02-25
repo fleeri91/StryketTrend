@@ -1,6 +1,6 @@
 import { BadgeDelta } from '@tremor/react';
 
-import { GamesRoot } from 'types/Games';
+import { Event } from 'types/Events';
 
 interface EventItemProps {
   startTime: string;
@@ -8,7 +8,7 @@ interface EventItemProps {
     home: string;
     away: string;
   };
-  percentage: {
+  distribution: {
     home: string;
     draw: string;
     away: string;
@@ -18,31 +18,31 @@ interface EventItemProps {
     draw: string;
     away: string;
   };
-  game?: GamesRoot;
+  event?: Event;
   onClick?: () => void;
 }
 
 const EventItem = ({
   startTime,
   teams,
-  percentage,
+  distribution,
   odds,
-  game,
+  event,
   onClick,
 }: EventItemProps): JSX.Element => {
-  const getPercentageDeltaType = (a: number, b: number): string => {
-    const percentageChange = ((b - a) / a) * 100;
+  const getDistributionDeltaType = (a: number, b: number): string => {
+    const distributionChange = ((b - a) / a) * 100;
 
     switch (true) {
-      case percentageChange >= 2:
+      case distributionChange >= 2:
         return 'increase';
-      case percentageChange >= 1:
+      case distributionChange >= 1:
         return 'moderateIncrease';
-      case percentageChange <= -2:
+      case distributionChange <= -2:
         return 'decrease';
-      case percentageChange <= -1:
+      case distributionChange <= -1:
         return 'moderateDecrease';
-      case percentageChange == 0:
+      case distributionChange == 0:
         return 'unchanged';
       default:
         return 'unchanged';
@@ -85,58 +85,61 @@ const EventItem = ({
               <BadgeDelta
                 className='w-full justify-start'
                 deltaType={
-                  game?.percentage[game.percentage.length - 1].home
-                    ? getPercentageDeltaType(
+                  event?.distribution[event.distribution.length - 1].home
+                    ? getDistributionDeltaType(
                         Number(
-                          game?.percentage[game.percentage.length - 1].home
+                          event?.distribution[event.distribution.length - 1]
+                            .home
                         ),
-                        Number(percentage.home)
+                        Number(distribution.home)
                       )
                     : 'unchanged'
                 }
                 tooltip={
-                  game &&
-                  `${game?.percentage[game.percentage.length - 1].home} %`
+                  event &&
+                  `${event?.distribution[event.distribution.length - 1].home} %`
                 }
-              >{`${percentage.home}%`}</BadgeDelta>
+              >{`${distribution.home}%`}</BadgeDelta>
             </span>
             <span className=''>
               <BadgeDelta
                 className='w-full justify-start'
                 deltaType={
-                  game?.percentage[game.percentage.length - 1].draw
-                    ? getPercentageDeltaType(
+                  event?.distribution[event.distribution.length - 1].draw
+                    ? getDistributionDeltaType(
                         Number(
-                          game?.percentage[game.percentage.length - 1].draw
+                          event?.distribution[event.distribution.length - 1]
+                            .draw
                         ),
-                        Number(percentage.draw)
+                        Number(distribution.draw)
                       )
                     : 'unchanged'
                 }
                 tooltip={
-                  game &&
-                  `${game?.percentage[game.percentage.length - 1].draw} %`
+                  event &&
+                  `${event?.distribution[event.distribution.length - 1].draw} %`
                 }
-              >{`${percentage.draw}%`}</BadgeDelta>
+              >{`${distribution.draw}%`}</BadgeDelta>
             </span>
             <span className=''>
               <BadgeDelta
                 className='w-full justify-start'
                 deltaType={
-                  game?.percentage[game.percentage.length - 1].away
-                    ? getPercentageDeltaType(
+                  event?.distribution[event.distribution.length - 1].away
+                    ? getDistributionDeltaType(
                         Number(
-                          game?.percentage[game.percentage.length - 1].away
+                          event?.distribution[event.distribution.length - 1]
+                            .away
                         ),
-                        Number(percentage.away)
+                        Number(distribution.away)
                       )
                     : 'unchanged'
                 }
                 tooltip={
-                  game &&
-                  `${game?.percentage[game.percentage.length - 1].away} %`
+                  event &&
+                  `${event?.distribution[event.distribution.length - 1].away} %`
                 }
-              >{`${percentage.away}%`}</BadgeDelta>
+              >{`${distribution.away}%`}</BadgeDelta>
             </span>
           </div>
           <div className='grid grid-cols-3 gap-4 mb'>
@@ -144,10 +147,10 @@ const EventItem = ({
               <BadgeDelta
                 className='w-full justify-start'
                 deltaType={
-                  game?.odds[game.percentage.length - 1].home
+                  event?.odds[event.odds.length - 1].home
                     ? getOddsDeltaType(
                         parseFloat(
-                          game?.odds[game.percentage.length - 1].home.replace(
+                          event?.odds[event.odds.length - 1].home.replace(
                             ',',
                             '.'
                           )
@@ -156,17 +159,17 @@ const EventItem = ({
                       )
                     : 'unchanged'
                 }
-                tooltip={game && game?.odds[game.percentage.length - 1].home}
+                tooltip={event && event?.odds[event.odds.length - 1].home}
               >{`${odds.home}`}</BadgeDelta>
             </span>
             <span className=''>
               <BadgeDelta
                 className='w-full justify-start'
                 deltaType={
-                  game?.odds[game.percentage.length - 1].draw
+                  event?.odds[event.odds.length - 1].draw
                     ? getOddsDeltaType(
                         parseFloat(
-                          game?.odds[game.percentage.length - 1].draw.replace(
+                          event?.odds[event.odds.length - 1].draw.replace(
                             ',',
                             '.'
                           )
@@ -175,17 +178,17 @@ const EventItem = ({
                       )
                     : 'unchanged'
                 }
-                tooltip={game && game?.odds[game.percentage.length - 1].draw}
+                tooltip={event && event?.odds[event.odds.length - 1].draw}
               >{`${odds.draw}`}</BadgeDelta>
             </span>
             <span className=''>
               <BadgeDelta
                 className='w-full justify-start'
                 deltaType={
-                  game?.odds[game.percentage.length - 1].away
+                  event?.odds[event.odds.length - 1].away
                     ? getOddsDeltaType(
                         parseFloat(
-                          game?.odds[game.percentage.length - 1].away.replace(
+                          event?.odds[event.odds.length - 1].away.replace(
                             ',',
                             '.'
                           )
@@ -194,7 +197,7 @@ const EventItem = ({
                       )
                     : 'unchanged'
                 }
-                tooltip={game && game?.odds[game.percentage.length - 1].away}
+                tooltip={event && event?.odds[event.odds.length - 1].away}
               >{`${odds.away}`}</BadgeDelta>
             </span>
           </div>

@@ -34,7 +34,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/_lib/connectDB.js"
+    "src/app/_lib/connectDB.js",
+    "server.js"
   ],
   "exclude": ["node_modules"]
 }

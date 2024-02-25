@@ -1,15 +1,14 @@
 export interface EventsRoot {
   _id: string;
-  timestamp: string;
   events: Event[];
   __v: number;
 }
 
 export interface Event {
   teams: Teams;
-  percentage: Percentage;
-  odds: Odds;
   eventNumber: number;
+  distribution: Distribution[];
+  odds: Odd[];
   _id: string;
 }
 
@@ -18,14 +17,18 @@ export interface Teams {
   away: string;
 }
 
-export interface Percentage {
+export interface Distribution {
   home: string;
   draw: string;
   away: string;
+  _id: string;
+  timestamp: string;
 }
 
-export interface Odds {
+export interface Odd {
   home: string;
   draw: string;
   away: string;
+  _id: string;
+  timestamp: string;
 }

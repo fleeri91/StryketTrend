@@ -1,40 +1,20 @@
 // baseSlice.ts
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import dayjs from 'dayjs';
-import { GamesRoot } from 'types/Games';
 
 export interface BaseState {
   today: string;
-  games: GamesRoot[];
 }
 
 const initialState: BaseState = {
   today: dayjs().add(0, 'day').format('YYYY-MM-DD'),
-  games: [],
 };
 
 const BaseSlice = createSlice({
   name: 'base',
   initialState,
-  reducers: {
-    setGames: (state, action: PayloadAction<GamesRoot[]>) => {
-      state.games = action.payload;
-      /*
-      state.games = action.payload.map((game) => ({
-        ...game,
-        percentage: game.percentage.map((percent) => ({
-          ...percent,
-          timestamp: dayjs(percent.timestamp).format('HH:mm'),
-        })),
-        odds: game.odds.map((odd) => ({
-          ...odd,
-          timestamp: dayjs(odd.timestamp).format('HH:mm'),
-        })),
-      }));
-      */
-    },
-  },
+  reducers: {},
 });
 
-export const { setGames } = BaseSlice.actions;
+export const {} = BaseSlice.actions;
 export const baseReducer = BaseSlice.reducer;

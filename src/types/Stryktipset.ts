@@ -16,7 +16,7 @@ export interface Draw {
   drawState: string;
   fund: any;
   lastDateWithoutTimeOfDay: string;
-  events: Event[];
+  events: StryktipsetEvent[];
   jackpotItems: any;
   productName: string;
   productId: number;
@@ -29,7 +29,7 @@ export interface Draw {
   checksum: string;
 }
 
-export interface Event {
+export interface StryktipsetEvent {
   eventNumber: number;
   description: string;
   cancelled: boolean;
