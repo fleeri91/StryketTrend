@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import dayjs from 'dayjs';
+import sv from 'dayjs/locale/sv';
 
 import { RiHistoryLine } from '@remixicon/react';
 
@@ -26,17 +27,24 @@ const App = () => {
   const [lastUpdated, setLastUpdated] = useState<string>('');
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
-  const { data: stryktipsetData } = useGetStryktipsetQuery(
-    void { pollingInterval: 1000 * 60 * 5 }
-  );
+  const { data: stryktipsetData } = useGetStryktipsetQuery(undefined, {
+    pollingInterval: 1000 * 60 * 2, // 2 minutes interval
+  });
 
   const { data: eventsData } = useGetEventsQuery(
-    void { pollingInterval: 1000 * 60 * 5 }
+    void { pollingInterval: 1000 * 60 * 10 }
   );
 
   const handleRowClick = async (event?: Event) => {
     event && setSelectedEvent(event);
   };
+
+  useEffect(() => {
+    if (stryktipsetData) {
+      const date = dayjs().locale(sv).format('HH:mm');
+      setLastUpdated(date);
+    }
+  }, [stryktipsetData]);
 
   return (
     <Container>
