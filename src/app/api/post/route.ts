@@ -93,3 +93,4 @@ export async function GET() {
     return NextResponse.json(error);
   }
 }
+export const revalidate = 0;
