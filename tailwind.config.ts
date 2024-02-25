@@ -103,7 +103,7 @@ const config: Config = {
         'tremor-metric': ['1.875rem', { lineHeight: '2.25rem' }],
       },
       gridTemplateColumns: {
-        'event-item': 'auto 1fr auto',
+        'event-item': 'auto 1fr minmax(275px, auto)',
       },
     },
   },
