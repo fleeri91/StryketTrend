@@ -61,7 +61,7 @@ const App = () => {
               </Flex>
             </>
           )}
-          {eventsData && eventsData[0].events.length !== 0 && (
+          {eventsData && eventsData[0] && eventsData[0].events.length !== 0 && (
             <EventList>
               {stryktipsetData &&
                 stryktipsetData.draws[0].events.map((event, index) => (
