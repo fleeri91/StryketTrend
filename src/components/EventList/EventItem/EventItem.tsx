@@ -68,6 +68,13 @@ const EventItem = ({
     }
   };
 
+  const getIndexToRender = (array: any[]): number => {
+    if (array.length === 1) {
+      return array.length - 1;
+    }
+    return array.length - 2;
+  };
+
   return (
     <li
       onClick={onClick}
@@ -79,17 +86,18 @@ const EventItem = ({
           <span>{`${teams.home}`}</span>
           <span>{`${teams.away}`}</span>
         </div>
-        <div className=''>
+        <div className='flex flex-col'>
           <div className='grid grid-cols-3 gap-4 mb-1'>
-            <span className=''>
+            <span>
               <BadgeDelta
                 className='w-full justify-start'
                 deltaType={
-                  event?.distribution[event.distribution.length - 1].home
+                  event?.distribution[getIndexToRender(event.distribution)].home
                     ? getDistributionDeltaType(
                         Number(
-                          event?.distribution[event.distribution.length - 1]
-                            .home
+                          event?.distribution[
+                            getIndexToRender(event.distribution)
+                          ].home
                         ),
                         Number(distribution.home)
                       )
@@ -97,7 +105,10 @@ const EventItem = ({
                 }
                 tooltip={
                   event &&
-                  `${event?.distribution[event.distribution.length - 1].home} %`
+                  `${
+                    event?.distribution[getIndexToRender(event.distribution)]
+                      .home
+                  } %`
                 }
               >{`${distribution.home}%`}</BadgeDelta>
             </span>
@@ -105,11 +116,12 @@ const EventItem = ({
               <BadgeDelta
                 className='w-full justify-start'
                 deltaType={
-                  event?.distribution[event.distribution.length - 1].draw
+                  event?.distribution[getIndexToRender(event.distribution)].draw
                     ? getDistributionDeltaType(
                         Number(
-                          event?.distribution[event.distribution.length - 1]
-                            .draw
+                          event?.distribution[
+                            getIndexToRender(event.distribution)
+                          ].draw
                         ),
                         Number(distribution.draw)
                       )
@@ -117,7 +129,10 @@ const EventItem = ({
                 }
                 tooltip={
                   event &&
-                  `${event?.distribution[event.distribution.length - 1].draw} %`
+                  `${
+                    event?.distribution[getIndexToRender(event.distribution)]
+                      .draw
+                  } %`
                 }
               >{`${distribution.draw}%`}</BadgeDelta>
             </span>
@@ -125,11 +140,12 @@ const EventItem = ({
               <BadgeDelta
                 className='w-full justify-start'
                 deltaType={
-                  event?.distribution[event.distribution.length - 1].away
+                  event?.distribution[getIndexToRender(event.distribution)].away
                     ? getDistributionDeltaType(
                         Number(
-                          event?.distribution[event.distribution.length - 1]
-                            .away
+                          event?.distribution[
+                            getIndexToRender(event.distribution)
+                          ].away
                         ),
                         Number(distribution.away)
                       )
@@ -137,7 +153,10 @@ const EventItem = ({
                 }
                 tooltip={
                   event &&
-                  `${event?.distribution[event.distribution.length - 1].away} %`
+                  `${
+                    event?.distribution[getIndexToRender(event.distribution)]
+                      .away
+                  } %`
                 }
               >{`${distribution.away}%`}</BadgeDelta>
             </span>
@@ -147,57 +166,60 @@ const EventItem = ({
               <BadgeDelta
                 className='w-full justify-start'
                 deltaType={
-                  event?.odds[event.odds.length - 1].home
+                  event?.odds[getIndexToRender(event.odds)].home
                     ? getOddsDeltaType(
                         parseFloat(
-                          event?.odds[event.odds.length - 1].home.replace(
-                            ',',
-                            '.'
-                          )
+                          event?.odds[
+                            getIndexToRender(event.odds)
+                          ].home.replace(',', '.')
                         ),
                         parseFloat(odds.home.replace(',', '.'))
                       )
                     : 'unchanged'
                 }
-                tooltip={event && event?.odds[event.odds.length - 1].home}
+                tooltip={
+                  event && event?.odds[getIndexToRender(event.odds)].home
+                }
               >{`${odds.home}`}</BadgeDelta>
             </span>
             <span className=''>
               <BadgeDelta
                 className='w-full justify-start'
                 deltaType={
-                  event?.odds[event.odds.length - 1].draw
+                  event?.odds[getIndexToRender(event.odds)].draw
                     ? getOddsDeltaType(
                         parseFloat(
-                          event?.odds[event.odds.length - 1].draw.replace(
-                            ',',
-                            '.'
-                          )
+                          event?.odds[
+                            getIndexToRender(event.odds)
+                          ].draw.replace(',', '.')
                         ),
                         parseFloat(odds.draw.replace(',', '.'))
                       )
                     : 'unchanged'
                 }
-                tooltip={event && event?.odds[event.odds.length - 1].draw}
+                tooltip={
+                  event && event?.odds[getIndexToRender(event.odds)].draw
+                }
               >{`${odds.draw}`}</BadgeDelta>
             </span>
             <span className=''>
               <BadgeDelta
                 className='w-full justify-start'
                 deltaType={
-                  event?.odds[event.odds.length - 1].away
+                  event?.odds[getIndexToRender(event.odds)].away
                     ? getOddsDeltaType(
                         parseFloat(
-                          event?.odds[event.odds.length - 1].away.replace(
-                            ',',
-                            '.'
-                          )
+                          event?.odds[
+                            getIndexToRender(event.odds)
+                          ].away.replace(',', '.')
                         ),
                         parseFloat(odds.away.replace(',', '.'))
                       )
                     : 'unchanged'
                 }
-                tooltip={event && event?.odds[event.odds.length - 1].away}
+                tooltip={
+                  event && event?.odds[getIndexToRender(event.odds)].away
+                }
               >{`${odds.away}`}</BadgeDelta>
             </span>
           </div>
