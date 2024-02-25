@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import Mergent from 'mergent';
 import axios from 'axios';
 import connectDB from 'src/app/_lib/connectDB';
 
@@ -85,12 +86,11 @@ export async function GET() {
         });
         await eventData.save();
       }
-      console.log('Data saved successfully!');
     }
 
-    return NextResponse.json(data);
+    return NextResponse.json({ message: 'Data saved successfully!' });
   } catch (error) {
-    return NextResponse.json(error);
+    return NextResponse.json({ error: error });
   }
 }
 export const revalidate = 0;
