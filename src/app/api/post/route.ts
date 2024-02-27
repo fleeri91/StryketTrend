@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server';
-import Mergent from 'mergent';
 import axios from 'axios';
 import connectDB from 'src/app/_lib/connectDB';
 
 import EventsSchema from '@schemas/EventsSchema';
+
+import { GAME_TYPE } from 'src/constants';
+
 import { StryktipsetEvent } from 'types/Stryktipset';
 import { EventDTO } from 'types/DTO';
 
@@ -11,7 +13,7 @@ export async function GET() {
   try {
     await connectDB();
     const response = await axios.get(
-      `https://api.www.svenskaspel.se/external/1/draw/europatipset/draws?accesskey=${process.env.NEXT_PUBLIC_API_KEY}`
+      `https://api.www.svenskaspel.se/external/1/draw/${GAME_TYPE}/draws?accesskey=${process.env.NEXT_PUBLIC_API_KEY}`
     );
     const data = response.data;
 
