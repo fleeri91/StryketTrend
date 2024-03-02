@@ -8,7 +8,7 @@ export interface Event {
   teams: Teams;
   eventNumber: number;
   distribution: Distribution[];
-  odds: Odd[];
+  odds: Odds[];
   _id: string;
 }
 
@@ -25,7 +25,7 @@ export interface Distribution {
   timestamp: string;
 }
 
-export interface Odd {
+export interface Odds {
   home: string;
   draw: string;
   away: string;
