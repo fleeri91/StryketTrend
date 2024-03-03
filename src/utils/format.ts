@@ -1,20 +1,15 @@
-import dayjs from "dayjs";
-import sv from "dayjs/locale/sv";
+import dayjs from 'dayjs'
+import sv from 'dayjs/locale/sv'
 
-import { Distribution, Odds } from "types/Events";
+import { Distribution, Odds } from 'types/Events'
 
-export const formatChartData = (
-  data: Distribution[] | Odds[]
-): Distribution[] | Odds[] => {
-  console.log(data);
+export const formatChartData = (data: Distribution[] | Odds[]): Distribution[] | Odds[] => {
   return data.map((item) => ({
     ...item,
-    timestamp: capitalizeFirstLetter(
-      dayjs(item.timestamp).locale(sv).format("ddd HH:mm")
-    ),
-  }));
-};
+    timestamp: capitalizeFirstLetter(dayjs(item.timestamp).locale(sv).format('ddd HH:mm')),
+  }))
+}
 
 const capitalizeFirstLetter = (str: string): string => {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-};
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
