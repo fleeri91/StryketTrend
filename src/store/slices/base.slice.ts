@@ -1,20 +1,24 @@
 // baseSlice.ts
-import { createSlice } from '@reduxjs/toolkit';
-import dayjs from 'dayjs';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { Event } from 'types/Events'
 
 export interface BaseState {
-  today: string;
+  events: Event[]
 }
 
 const initialState: BaseState = {
-  today: dayjs().add(0, 'day').format('YYYY-MM-DD'),
-};
+  events: [],
+}
 
 const BaseSlice = createSlice({
   name: 'base',
   initialState,
-  reducers: {},
-});
+  reducers: {
+    setEvents: (state, action: PayloadAction<Event[]>) => {
+      state.events = action.payload
+    },
+  },
+})
 
-export const {} = BaseSlice.actions;
-export const baseReducer = BaseSlice.reducer;
+export const { setEvents } = BaseSlice.actions
+export const baseReducer = BaseSlice.reducer
