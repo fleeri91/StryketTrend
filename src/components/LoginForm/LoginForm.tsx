@@ -1,14 +1,14 @@
 'use client'
 
 import { FormEvent, useState } from 'react'
-import axios from 'axios'
 import { Button, TextInput } from '@tremor/react'
 
 import Alert from '@components/UI/Alert'
 
 import { UserDTO } from 'types/user/UserDTO'
+import { signIn } from 'next-auth/react'
 
-const RegisterPage = (): JSX.Element => {
+const LoginForm = (): JSX.Element => {
   const initialUserState: UserDTO = {
     username: '',
     email: '',
@@ -29,49 +29,24 @@ const RegisterPage = (): JSX.Element => {
   const handleOnSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    const { username, email, password } = user
+    const { username, password } = user
 
-    if (!username || !email || !password) {
-      setAlertMessage({ type: 'danger', message: 'Please fill the text inputs' })
-      return
-    }
-
-    try {
-      const userExistsRes = await axios.post(
-        '/api/userExists',
-        { email },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+    await signIn('credentials', {
+      username,
+      password,
+      redirect: false,
+    })
+      .then((res) => {
+        if (res?.ok) {
+          setAlertMessage({ type: 'success', message: 'Logged in' })
+          return
+        } else {
+          setAlertMessage({ type: 'danger', message: 'Username or password is incorrect.' })
         }
-      )
-
-      const { existingUser } = await userExistsRes.data
-
-      if (existingUser) {
-        setAlertMessage({ type: 'danger', message: 'User already exists' })
-        return
-      }
-
-      const registerResponse = await axios.post(
-        '/api/register',
-        { user },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      if (registerResponse.status === 201) {
-        setUser(initialUserState)
-        setAlertMessage({ type: 'success', message: 'User registration success' })
-      } else {
-        setAlertMessage({ type: 'danger', message: 'User registration failed' })
-      }
-    } catch (error) {
-      setAlertMessage({ type: 'danger', message: error as string })
-    }
+      })
+      .catch(() => {
+        setAlertMessage({ type: 'danger', message: 'Username or password is incorrect.' })
+      })
   }
 
   return (
@@ -87,7 +62,7 @@ const RegisterPage = (): JSX.Element => {
       <div className="flex min-h-screen flex-col justify-center items-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h1 className="mt-10 text-center text-4xl font-bold leading-9 tracking-tight text-gray-900 dark:text-white">
-            Registrera
+            Logga in
           </h1>
         </div>
 
@@ -97,18 +72,9 @@ const RegisterPage = (): JSX.Element => {
               id="username"
               name="username"
               type="text"
-              placeholder="Namn"
+              placeholder="Användarnamn"
               className="p-2"
               value={user.username}
-              onChange={handleInputChange}
-            />
-            <TextInput
-              id="email"
-              name="email"
-              type="email"
-              placeholder="E-mail"
-              className="p-2"
-              value={user.email}
               onChange={handleInputChange}
             />
             <TextInput
@@ -125,7 +91,7 @@ const RegisterPage = (): JSX.Element => {
               color="indigo"
               className="w-full dark:text-white p-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-colors"
             >
-              Skicka
+              Logga in
             </Button>
           </form>
         </div>
@@ -134,4 +100,4 @@ const RegisterPage = (): JSX.Element => {
   )
 }
 
-export default RegisterPage
+export default LoginForm

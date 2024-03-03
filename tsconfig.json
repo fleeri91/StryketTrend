@@ -19,6 +19,7 @@
       }
     ],
     "paths": {
+      "@api/*": ["src/app/api/*"],
       "@components/*": ["src/components/*"],
       "@hooks/*": ["src/hooks/*"],
       "@lib/*": ["src/app/_lib/*"],
