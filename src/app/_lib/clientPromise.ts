@@ -1,4 +1,4 @@
-// This approach is taken from https://github.com/vercel/next.js/tree/canary/examples/with-mongodb
+// mongodb.ts
 import { MongoClient } from 'mongodb'
 
 if (!process.env.NEXT_PUBLIC_MONGODB_CONNECTION) {
