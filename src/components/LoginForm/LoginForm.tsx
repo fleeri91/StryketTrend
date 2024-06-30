@@ -8,6 +8,7 @@ import Alert from '@components/UI/Alert'
 
 import { UserDTO } from 'types/user/UserDTO'
 import { signIn } from 'next-auth/react'
+import Typography from '@components/Typography'
 
 const LoginForm = (): JSX.Element => {
   const initialUserState: UserDTO = {
@@ -62,9 +63,9 @@ const LoginForm = (): JSX.Element => {
 
       <div className="flex min-h-screen flex-col justify-center items-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h1 className="mt-10 text-center text-4xl font-bold leading-9 tracking-tight text-gray-900 dark:text-white">
+          <Typography variant="h1" align="center">
             Logga in
-          </h1>
+          </Typography>
         </div>
 
         <div className="mt-10 sm:mx-auto w-full sm:max-w-sm">
@@ -90,18 +91,18 @@ const LoginForm = (): JSX.Element => {
             <Button
               type="submit"
               color="indigo"
-              className="w-full dark:text-white p-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-colors"
+              className="w-full dark:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-colors"
             >
-              Logga in
+              <Typography variant="p">Logga in</Typography>
             </Button>
           </form>
 
-          <p className="mt-2 text-center text-base font-bold leading-9 tracking-tight text-gray-900 dark:text-white">
+          <Typography align="center" variant="p" className="mt-2">
             {`Har du inget konto? Skapa ett `}
             <Link className="hover:text-indigo-400 transition-colors underline" href="/register">
               här
             </Link>
-          </p>
+          </Typography>
         </div>
       </div>
     </>
