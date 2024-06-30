@@ -19,6 +19,7 @@ import EventInfo from '@components/EventInfo'
 import { HistoryList } from '@components/HistoryList'
 import { EventsRoot, Event } from 'types/Events'
 import { formatChartData } from '@utils/format'
+import NoEvents from '@components/NoEvents'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -136,7 +137,7 @@ const App = () => {
           </Modal>
         </>
       ) : (
-        <>Stryktipset öppnar tisdag kl. 07:00</>
+        <NoEvents />
       )}
     </Container>
   )
