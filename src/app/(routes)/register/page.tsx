@@ -7,6 +7,7 @@ import { Button, TextInput } from '@tremor/react'
 import Alert from '@components/UI/Alert'
 
 import { UserDTO } from 'types/user/UserDTO'
+import Link from 'next/link'
 
 const RegisterPage = (): JSX.Element => {
   const initialUserState: UserDTO = {
@@ -123,11 +124,18 @@ const RegisterPage = (): JSX.Element => {
             <Button
               type="submit"
               color="indigo"
-              className="w-full dark:text-white p-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-colors"
+              className="w-full dark:text-white p-4 font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-colors"
             >
               Skicka
             </Button>
           </form>
+
+          <p className="mt-2 text-center text-base font-bold leading-9 tracking-tight text-gray-900 dark:text-white">
+            {`Har du redan ett konto? Logga in `}
+            <Link className="hover:text-indigo-400 transition-colors underline" href="/login">
+              här
+            </Link>
+          </p>
         </div>
       </div>
     </>

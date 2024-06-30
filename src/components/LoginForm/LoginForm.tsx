@@ -1,6 +1,7 @@
 'use client'
 
 import { FormEvent, useState } from 'react'
+import Link from 'next/link'
 import { Button, TextInput } from '@tremor/react'
 
 import Alert from '@components/UI/Alert'
@@ -94,6 +95,13 @@ const LoginForm = (): JSX.Element => {
               Logga in
             </Button>
           </form>
+
+          <p className="mt-2 text-center text-base font-bold leading-9 tracking-tight text-gray-900 dark:text-white">
+            {`Har du inget konto? Skapa ett `}
+            <Link className="hover:text-indigo-400 transition-colors underline" href="/register">
+              här
+            </Link>
+          </p>
         </div>
       </div>
     </>
