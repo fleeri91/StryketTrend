@@ -4,24 +4,19 @@ import { redirect } from 'next/navigation'
 
 import EventView from 'src/views/EventView'
 
-import { useAuthStore } from '@store/useAuth'
-import LoginForm from '@components/LoginForm'
 import { useEffect } from 'react'
+import { useSession } from 'next-auth/react'
 
 const App = () => {
-  const auth = useAuthStore()
+  const session = useSession()
 
   useEffect(() => {
-    if (!auth.isAuthenticated) {
+    if (session.status == 'unauthenticated') {
       redirect('/login')
     }
-  }, [auth])
+  }, [session])
 
-  return (
-    <>
-      <EventView />
-    </>
-  )
+  return <EventView />
 }
 
 export default App
