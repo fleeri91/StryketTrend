@@ -1,27 +1,20 @@
-import connectDB from '@lib/connectDB'
-import UserSchema from '@schemas/UserSchema'
 import NextAuth from 'next-auth'
+import { Account, User as AuthUser } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import bcrypt from 'bcrypt'
+import UserSchema from '@schemas/UserSchema'
+import connectDB from '@lib/connectDB'
 
-export default NextAuth({
+export const authOptions: any = {
+  // Configure one or more authentication providers
   providers: [
     CredentialsProvider({
       id: 'credentials',
-      name: 'credentials',
-      type: 'credentials',
+      name: 'Credentials',
       credentials: {
-        email: {
-          label: 'Username',
-          type: 'text',
-        },
-        password: {
-          label: 'Password',
-          type: 'password',
-        },
+        email: { label: 'Email', type: 'text' },
+        password: { label: 'Password', type: 'password' },
       },
-
-      //@ts-ignore
       async authorize(credentials: any) {
         await connectDB()
 
@@ -48,23 +41,22 @@ export default NextAuth({
       },
     }),
   ],
+  callbacks: {
+    async signIn({ user, account }: { user: AuthUser; account: Account }) {
+      if (account?.provider == 'credentials') {
+        return true
+      }
+    },
+    async redirect({ baseUrl }: any) {
+      return baseUrl
+    },
+  },
+  secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: 'jwt',
     maxAge: 30 * 24 * 60 * 60,
   },
-  secret: process.env.NEXT_PUBLIC_NEXTAUTH_SECRET,
-  pages: {
-    signIn: '/',
-  },
-  logger: {
-    error(code, metadata) {
-      console.error(code, metadata)
-    },
-    warn(code) {
-      console.warn(code)
-    },
-    debug(code, metadata) {
-      console.debug(code, metadata)
-    },
-  },
-})
+}
+
+export const handler = NextAuth(authOptions)
+export { handler as GET, handler as POST }
