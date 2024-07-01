@@ -18,8 +18,6 @@ export async function POST(request: Request) {
     // Return the result
     return NextResponse.json({ existingUser })
   } catch (error) {
-    // Handle any errors
-    console.log(error)
     // Return an error response
     return NextResponse.json({ message: 'An error occured while check if user exists' }, { status: 500 })
   }
