@@ -2,13 +2,14 @@
 
 import { FormEvent, useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { signIn } from 'next-auth/react'
+import { toast } from 'sonner'
 import { Button, TextInput } from '@tremor/react'
 
-import Alert from '@components/UI/Alert'
+import Typography from '@components/Typography'
 
 import { UserDTO } from 'types/user/UserDTO'
-import { signIn } from 'next-auth/react'
-import Typography from '@components/Typography'
 
 const LoginForm = (): JSX.Element => {
   const initialUserState: UserDTO = {
@@ -16,12 +17,10 @@ const LoginForm = (): JSX.Element => {
     email: '',
     password: '',
   }
-  const initialAlertMessage: AlertMessage = {
-    message: '',
-  }
 
   const [user, setUser] = useState<UserDTO>(initialUserState)
-  const [alertMessage, setAlertMessage] = useState<AlertMessage>(initialAlertMessage)
+
+  const router = useRouter()
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
@@ -40,27 +39,19 @@ const LoginForm = (): JSX.Element => {
     })
       .then((res) => {
         if (res?.ok) {
-          setAlertMessage({ type: 'success', message: 'Logged in' })
-          return
+          toast.success('Inloggning lyckades')
+          router.push('/')
         } else {
-          setAlertMessage({ type: 'danger', message: 'Username or password is incorrect.' })
+          toast.error('Felaktigt användarnamn eller lösenord')
         }
       })
       .catch(() => {
-        setAlertMessage({ type: 'danger', message: 'Username or password is incorrect.' })
+        toast.error('Felaktigt användarnamn eller lösenord')
       })
   }
 
   return (
     <>
-      <Alert
-        type={alertMessage.type}
-        hidden={!alertMessage.message}
-        onClick={() => setAlertMessage(initialAlertMessage)}
-      >
-        {alertMessage.message}
-      </Alert>
-
       <div className="flex min-h-screen flex-col justify-center items-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <Typography variant="h1" align="center">
