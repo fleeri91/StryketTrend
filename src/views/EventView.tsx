@@ -44,7 +44,7 @@ const EventView = () => {
   }, [stryktipsetData])
 
   return (
-    <Container>
+    <Container className="my-8">
       {stryktipsetData?.draws.length !== 0 ? (
         <>
           {stryktipsetData && (
@@ -78,16 +78,8 @@ const EventView = () => {
                       home: event.participants[0].name,
                       away: event.participants[1].name,
                     }}
-                    distribution={{
-                      home: event.distribution.home,
-                      draw: event.distribution.draw,
-                      away: event.distribution.away,
-                    }}
-                    odds={{
-                      home: event.odds.home,
-                      draw: event.odds.draw,
-                      away: event.odds.away,
-                    }}
+                    distribution={event.distribution}
+                    odds={event.odds}
                     onClick={() => handleRowClick(eventsData[0]?.events[index]).then(() => setIsGraphOpen(true))}
                   />
                 ))}
