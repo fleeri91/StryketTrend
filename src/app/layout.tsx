@@ -4,6 +4,9 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 
 import ReduxProvider from '@store/provider'
+import { getServerSession } from 'next-auth'
+import SessionProvider from '@lib/sessionProvider'
+import { Toaster } from 'sonner'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -12,11 +15,12 @@ export const metadata: Metadata = {
   description: '',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const session = await getServerSession()
   return (
     <html lang="en">
       <head>
@@ -29,7 +33,10 @@ export default function RootLayout({
         */}
       </head>
       <body className={inter.className}>
-        <ReduxProvider>{children}</ReduxProvider>
+        <ReduxProvider>
+          <SessionProvider session={session}>{children}</SessionProvider>
+        </ReduxProvider>
+        <Toaster theme="dark" richColors />
       </body>
     </html>
   )
