@@ -1,1 +1,1 @@
-export const GAME_TYPE = 'europatipset'
+export const GAME_TYPE = 'stryktipset'
